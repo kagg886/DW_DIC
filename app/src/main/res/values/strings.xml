@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DW_DIC</string>
+    <string name="title_activity_dicmock">DICMockActivity</string>
+</resources>
