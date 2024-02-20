@@ -21,7 +21,7 @@ import java.nio.file.Paths
 
 
 class App : Application() {
-    private val setting: DataStore<Preferences> by preferencesDataStore(name = "setting")
+    val setting: DataStore<Preferences> by preferencesDataStore(name = "setting")
 
     var pluginService: PluginService? = null
         set(value) {

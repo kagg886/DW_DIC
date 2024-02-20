@@ -2,6 +2,8 @@ package com.kagg886.rainbowcourse.dw_dic
 
 import com.kagg886.rainbowcourse.dw_dic.util.Promise
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Test
@@ -12,14 +14,13 @@ import org.junit.Test
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
-    private lateinit var ir: Promise<String, String>
 
     @Test
     fun testIR() {
-        ir = Promise {
+        val ir = Promise<String, String> {
             Thread {
                 Thread.sleep(2000)
-                ir.resolve("awa")
+                resolve("awa")
             }.start()
         }
 
@@ -29,5 +30,19 @@ class ExampleUnitTest {
                 println(s)
             }
         }
+    }
+
+    @Test
+    fun testFlow() = runBlocking {
+        val flow = flow<Int> {
+            emit(1)
+            delay(1000)
+            emit(2)
+            delay(1000)
+            emit(3)
+        }.collect {
+            println(it)
+        }
+        println("aaa")
     }
 }

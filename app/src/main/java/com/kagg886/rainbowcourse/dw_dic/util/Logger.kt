@@ -1,6 +1,8 @@
 package com.kagg886.rainbowcourse.dw_dic.util;
 
 import android.util.Log;
+import com.kagg886.rainbowcourse.dw_dic.App
+import io.github.seikodictionaryenginev2.base.util.IOUtil
 
 interface Logger {
     fun i(msg: String)
@@ -9,29 +11,29 @@ interface Logger {
 
     companion object : Logger {
         private val receiver = mutableListOf(
-                AndroidLogger
+            AndroidLogger,
+            BridgeLogger
         )
 
         override fun i(msg: String) {
             receiver.forEach {
-                AndroidLogger.i(msg)
+                it.i(msg)
             }
         }
 
         override fun w(msg: String, e: Throwable?) {
             receiver.forEach {
-                AndroidLogger.w(msg, e)
+                it.w(msg, e)
             }
         }
 
         override fun e(msg: String, e: Throwable?) {
             receiver.forEach {
-                AndroidLogger.e(msg, e)
+                it.e(msg, e)
             }
         }
     }
 }
-
 
 
 object AndroidLogger : Logger {
@@ -51,6 +53,23 @@ object AndroidLogger : Logger {
 
     override fun e(msg: String, e: Throwable?) {
         Log.e("DW_DIC_LOG", "[${getTag()}]: $msg", e)
+    }
+
+}
+
+object BridgeLogger : Logger {
+    override fun i(msg: String) {
+        App.getApp().pluginService?.printI(msg)
+    }
+
+    override fun w(msg: String, e: Throwable?) {
+        val info = if (e == null) "" else IOUtil.getException(e)
+        App.getApp().pluginService?.printW("${msg}\n${info}")
+    }
+
+    override fun e(msg: String, e: Throwable?) {
+        val info = if (e == null) "" else IOUtil.getException(e)
+        App.getApp().pluginService?.printE("${msg}\n${info}")
     }
 
 }
