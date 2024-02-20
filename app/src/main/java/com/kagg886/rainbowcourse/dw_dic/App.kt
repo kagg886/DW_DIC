@@ -2,12 +2,9 @@ package com.kagg886.rainbowcourse.dw_dic
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.*
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -55,6 +52,8 @@ class App : Application() {
         return valueState
     }
 
+    //TODO 只兼容Android9以上的
+    @SuppressLint("NewApi")
     override fun onCreate() {
         super.onCreate()
         val root = getExternalFilesDir("files")?.parentFile?.absolutePath
