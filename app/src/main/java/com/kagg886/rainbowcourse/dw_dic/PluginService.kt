@@ -36,7 +36,11 @@ class PluginService: PluginBinder(), PluginBinderHandler {
             }
 
             val runtime = WeChatRuntime(it.indexFile,p0)
-            runtime.invoke(p0[Msg.SYSTEM_MSGTEXT])
+            try {
+                runtime.invoke(p0[Msg.SYSTEM_MSGTEXT])
+            } catch (e: Exception) {
+                super.printE(e.message)
+            }
         }
         //        String msg = messenger.getString();
         //        if (msg.equals("测试"))

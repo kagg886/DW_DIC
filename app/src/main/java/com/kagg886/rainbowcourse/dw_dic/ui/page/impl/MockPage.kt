@@ -1,6 +1,5 @@
 package com.kagg886.rainbowcourse.dw_dic.ui.page.impl
 
-import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,21 +13,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kagg886.rainbowcourse.dw_dic.App
-import com.kagg886.rainbowcourse.dw_dic.EditActivity
 import com.kagg886.rainbowcourse.dw_dic.runtime.TestRuntime
-import com.kagg886.rainbowcourse.dw_dic.ui.theme.Typography
-import com.kagg886.rainbowcourse.dw_dic.util.deleteDir
-import com.kagg886.rainbowcourse.dw_dic.util.findProjectByName
 import io.github.seikodictionaryenginev2.base.env.DICList
-import io.github.seikodictionaryenginev2.base.env.DictionaryEnvironment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.nio.file.Paths
 
 data class MockMessage(val isBot: Boolean, val msg: String)
 
@@ -121,7 +113,12 @@ fun MockPage() {
                     CoroutineScope(Dispatchers.IO).launch {
                         DICList.INSTANCE.forEach {
                             val tr = TestRuntime(it.indexFile, msg, messageList)
-                            tr.invoke(msg)
+
+                            try {
+                                tr.invoke(msg)
+                            } catch (e: Exception) {
+                                messageList.add(MockMessage(true, e.message!!))
+                            }
                         }
                     }
                 }) {
