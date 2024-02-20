@@ -1,21 +1,21 @@
 package com.kagg886.rainbowcourse.dw_dic
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.IBinder
+import androidx.core.graphics.drawable.toBitmap
 import ayzf.mcsq.dw.msg.Messenger
 import ayzf.mcsq.dw.msg.Msg
 import ayzf.mcsq.dw.plugin.PluginBinder
 import ayzf.mcsq.dw.plugin.PluginBinderHandler
 import com.kagg886.rainbowcourse.dw_dic.runtime.WeChatRuntime
 import com.kagg886.rainbowcourse.dw_dic.runtime.get
+import com.kagg886.rainbowcourse.dw_dic.util.Logger
 import io.github.seikodictionaryenginev2.base.env.DICList
 import io.github.seikodictionaryenginev2.base.env.DictionaryEnvironment
 
 class PluginService: PluginBinder(), PluginBinderHandler {
     override fun onBind(intent: Intent?): IBinder? {
+        Logger.i("插件开始回绑")
         return super.newBinder(intent, this)
     }
 
@@ -55,9 +55,11 @@ class PluginService: PluginBinder(), PluginBinderHandler {
         //    }
     }
 
-    override fun icon(): Bitmap {
-        return BitmapFactory.decodeResource(resources,R.drawable.ic_launcher)
+    private val icon by lazy {
+        resources.getDrawable(R.drawable.ic_launcher, theme)!!.toBitmap(250, 250)
     }
+
+    override fun icon() = icon
 
     override fun name() = "DW_DIC"
 

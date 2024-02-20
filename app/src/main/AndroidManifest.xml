@@ -33,11 +33,14 @@
         <service
                 android:name=".PluginService"
                 android:exported="true"
+                android:enabled="true"
                 tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="ayzf.mcsq.dw.plugin"/>
             </intent-filter>
         </service>
+        <meta-data android:name="android.max_aspect" android:value="4.0"/>
     </application>
+
 
 </manifest>

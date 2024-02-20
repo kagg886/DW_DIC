@@ -3,7 +3,6 @@ package com.kagg886.rainbowcourse.dw_dic.runtime
 import ayzf.mcsq.dw.msg.Messenger
 import ayzf.mcsq.dw.msg.Msg
 import com.kagg886.rainbowcourse.dw_dic.App
-import com.kagg886.rainbowcourse.dw_dic.PluginService
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile
 import io.github.seikodictionaryenginev2.base.exception.DictionaryOnRunningException
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime
@@ -28,6 +27,8 @@ class WeChatRuntime(file: DictionaryFile, event: Messenger) : BasicRuntime<Messe
 
     override fun clearMessage0(cache: Messenger) {
         try {
+            cache.addMsg(Msg.SYSTEM_SENDID, contact);
+            cache.addMsg(Msg.SYSTEM_MSGTYPE, Msg.MSGTYPE_TEXT);
             App.getApp().pluginService!!.send(cache)
         } catch (e:Exception) {
             throw DictionaryOnRunningException("插件掉线")
