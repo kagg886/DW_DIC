@@ -11,6 +11,11 @@ class TestRuntime(file: DictionaryFile?, event: String?, private val l: Snapshot
 
     override fun initMessageCache(): StringBuilder = StringBuilder()
 
+    override fun initObject(command: String?, event: String?) {
+        super.initObject(command, event)
+        runtimeObject["上下文"] = command
+    }
+
     override fun appendMessage(str: String?) {
         messageCache.append(str)
     }
