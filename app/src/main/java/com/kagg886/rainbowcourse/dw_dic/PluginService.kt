@@ -58,7 +58,7 @@ class PluginService: PluginBinder(), PluginBinderHandler {
                 try {
                     runtime.invoke(p0[Msg.SYSTEM_MSGTEXT])
                 } catch (e: Exception) {
-                    super.printE(e.message)
+                    Logger.e(e.message!!, e)
                 }
             }
         }

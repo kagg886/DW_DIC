@@ -18,6 +18,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kagg886.rainbowcourse.dw_dic.App
 import com.kagg886.rainbowcourse.dw_dic.runtime.TestRuntime
 import io.github.seikodictionaryenginev2.base.env.DICList
+import io.github.seikodictionaryenginev2.base.util.IOUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -51,9 +52,9 @@ fun MockPage() {
         listState.animateScrollToItem(index = messageList.size - 1)
     }
 
-    var fistOpenMock by App.getApp().rememberPreferenceState(booleanPreferencesKey("mockFirstOpen"), true)
+    var dialog by App.getApp().rememberPreferenceState(booleanPreferencesKey("mockFirstOpen"), false)
 
-    if (fistOpenMock) {
+    if (!dialog) {
         AlertDialog(
             title = {
                 Text("帮助")
@@ -66,7 +67,7 @@ fun MockPage() {
             onDismissRequest = {},
             confirmButton = {
                 Button(onClick = {
-                    fistOpenMock = false
+                    dialog = true
                 }) {
                     Text("不再提示")
                 }
@@ -117,7 +118,7 @@ fun MockPage() {
                             try {
                                 tr.invoke(msg)
                             } catch (e: Exception) {
-                                messageList.add(MockMessage(true, e.message!!))
+                                messageList.add(MockMessage(true, e.message!! + "\n" + IOUtil.getException(e)))
                             }
                         }
                     }
