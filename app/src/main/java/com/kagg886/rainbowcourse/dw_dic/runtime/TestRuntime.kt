@@ -6,7 +6,8 @@ import com.kagg886.rainbowcourse.dw_dic.util.Logger
 import io.github.seikodictionaryenginev2.base.entity.DictionaryFile
 import io.github.seikodictionaryenginev2.base.session.BasicRuntime
 
-class TestRuntime(file: DictionaryFile?, event: String?, private val l: SnapshotStateList<MockMessage>): BasicRuntime<String,String,StringBuilder>(file, event) {
+class TestRuntime(file: DictionaryFile?, event: String?, val list: SnapshotStateList<MockMessage>) :
+    BasicRuntime<String, String, StringBuilder>(file, event) {
     override fun initContact(EVENT: String?): String = "";
 
     override fun initMessageCache(): StringBuilder = StringBuilder()
@@ -21,7 +22,7 @@ class TestRuntime(file: DictionaryFile?, event: String?, private val l: Snapshot
     }
 
     override fun clearMessage0(cache: StringBuilder?) {
-        l.add(MockMessage(true,cache.toString()))
+        list.add(MockMessage(true, cache.toString()))
         Logger.i(cache.toString())
     }
 }

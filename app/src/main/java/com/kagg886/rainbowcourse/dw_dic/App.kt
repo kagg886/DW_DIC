@@ -9,9 +9,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import ayzf.mcsq.dw.msg.Messenger
+import com.kagg886.rainbowcourse.dw_dic.runtime.func.Log
 import com.kagg886.rainbowcourse.dw_dic.util.Logger
 import io.github.seikodictionaryenginev2.base.command.Registrator
 import io.github.seikodictionaryenginev2.base.entity.code.DictionaryCommandMatcher
+import io.github.seikodictionaryenginev2.base.entity.code.func.Function
 import io.github.seikodictionaryenginev2.base.env.DICList
 import io.github.seikodictionaryenginev2.base.env.DictionaryEnvironment
 import kotlinx.coroutines.flow.map
@@ -73,6 +75,8 @@ class App : Application() {
 
         DictionaryCommandMatcher.domainQuoteNew["群"] = arrayOf(Messenger::class.java)
         DictionaryCommandMatcher.domainQuoteNew["测试"] = arrayOf(String::class.java)
+
+        Function.globalManager["日志"] = Log::class.java
         Logger.i("词库引擎注入完毕")
     }
 

@@ -27,6 +27,10 @@
 -ignorewarnings
 
 -keep class io.github.seikodictionaryenginev2** {*;}
+-keepclasseswithmembers class * extends io.github.seikodictionaryenginev2.base.entity.code.func.Function{
+    <fields>;
+    <methods>;
+}
 
 #kotlin
 -keep class kotlin.** { *; }
